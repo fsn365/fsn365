@@ -1,8 +1,15 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import Link from 'next/link';
 import './Head.less'
 import Search from './search'
 export default function Head(){
+
+    const [pagename,setPagename]=useState()
+    // console.log(pagename)
+    useEffect(()=>{
+        const page=window.location.pathname
+        setPagename(page)
+    })
     return(
         <div className="box-head">
             <div className="box-nav">
@@ -21,7 +28,8 @@ export default function Head(){
                     </h1>
                 </div>
                 <div className="box-a">
-                    <Search/>
+                    {pagename==='/' ? '' : <Search/>}
+                    
                     <Link href='/'><a>Home</a></Link>
                     <Link href='/Blocks' ><a>Blocks</a></Link>
                     <Link href='/Transations'><a>Transations</a></Link>

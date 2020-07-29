@@ -42,7 +42,7 @@ const columns = [
 ];
 
 const blockel = (v) => {
-  console.log(v)
+  // console.log(v)
 }
 
 export default function Blocks () {
@@ -68,8 +68,9 @@ export default function Blocks () {
         setPage(0);
     };
     return (
+      <div>
+        <Head/>
         <div className="blocksdiv">
-          <Head/>
             <div className="blockstext">Blocks</div>
             <Paper className='root'>
                 <TableContainer className='container'>
@@ -95,6 +96,7 @@ export default function Blocks () {
                                 const value = row[column.id];
                                 return (
                                 <TableCell onClick={blockel(value)} key={column.id} align={column.align}>
+                                  {/* {console.log(column.format(value))} */}
                                     {column.format && typeof value === 'number' ? column.format(value) : value}
                                 </TableCell>
                                 );
@@ -115,7 +117,8 @@ export default function Blocks () {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-            <Footer/>
         </div>
+        <Footer/>
+      </div>
     );
 }
