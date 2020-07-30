@@ -1,19 +1,19 @@
-import React, { useState,useEffect } from 'react';
-import './blocks.less'
+import React, { useState, useEffect } from "react";
+import "./blocks.less";
+// import axios from "axios";
+import { getBlocks } from "../api";
+import Head from "../Public/Head";
+import Footer from "../Public/Footer";
 
-import Head from '../Public/Head'
-import Footer from '../Public/Footer'
-import { getBlocks } from '../api'
-
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
 
 const columns = [
   { id: "height", label: "Block", minWidth: 170, align: "center" },
@@ -45,19 +45,8 @@ const blockel = (v) => {
   // console.log(v)
 };
 
-    useEffect(()=>{
-      const fetchData = async () => {
-        const result = await getBlocks()
-        if (result.data.data === undefined) {
-          fetchData();
-          return;
-        }
-        setArr(result.data.data)
-      };
-      fetchData()
-    },[ ])
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+export default function Blocks() {
+  const [arr, setArr] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {

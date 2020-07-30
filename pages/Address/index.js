@@ -102,7 +102,7 @@ export default function StickyHeadTable() {
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={row.code}
+                        key={row.id}
                       >
                         {columns.map((column) => {
                           const value = row[column.id];
