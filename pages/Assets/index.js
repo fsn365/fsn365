@@ -58,6 +58,10 @@ export default function StickyHeadTable() {
     const fetchData = async () => {
       const result = await assetsList();
       console.log(result.data.data);
+      if (result.data.data === undefined) {
+        fetchData();
+        return;
+      }
       setrows(result.data.data);
     };
 
@@ -94,7 +98,7 @@ export default function StickyHeadTable() {
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={row.code}
+                        key={row.id}
                       >
                         {columns.map((column) => {
                           const value = row[column.id];

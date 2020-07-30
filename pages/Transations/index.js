@@ -72,7 +72,11 @@ export default function Blocks() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await TxnList();
-      console.log(result.data.data);
+      // console.log(result.data.data);
+      if (result.data.data === undefined) {
+        fetchData();
+        return;
+      }
       setrows(result.data.data);
     };
 
