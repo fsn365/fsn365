@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from 'react';
 import './blocks.less'
-import axios from 'axios'
 
 import Head from '../Public/Head'
 import Footer from '../Public/Footer'
+import { getBlocks } from '../api'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -50,9 +50,12 @@ export default function Blocks () {
 
     useEffect(()=>{
       const fetchData = async () => {
-        const result = await  axios.get('https://api.fsn365.com/blocks')
-       
-        setArr(result.data.data.data)
+        const result = await getBlocks()
+        if (result.data.data === undefined) {
+          fetchData();
+          return;
+        }
+        setArr(result.data.data)
       };
       fetchData()
     },[ ])
