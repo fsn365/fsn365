@@ -1,7 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import './home.less'
 
-// import axios from 'axios'
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import {getStats} from '../api'
@@ -66,9 +65,7 @@ const home = ()=>{
                             <p>{rows.txns}</p>
                         </div>
                   </div>
-                  
                 }
-               
             </div>
     )
 }

@@ -55,10 +55,10 @@ export default function StickyHeadTable() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await addressList();
-      if (result.data.data === undefined) {
-        fetchData();
-        return;
-      }
+      if (result.data.data === undefined) {
+        fetchData();
+        return;
+      }
       setrows(result.data.data);
     };
 
