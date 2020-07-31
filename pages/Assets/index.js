@@ -57,11 +57,11 @@ export default function StickyHeadTable() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await assetsList();
-      console.log(result.data.data);
-      if (result.data.data === undefined) {
-        fetchData();
-        return;
-      }
+      // console.log(result.data.data);
+      if (result.data.data === undefined) {
+        fetchData();
+        return;
+      }
       setrows(result.data.data);
     };
 

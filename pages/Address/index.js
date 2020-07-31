@@ -55,11 +55,18 @@ export default function StickyHeadTable() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await addressList();
+<<<<<<< HEAD
       // console.log(result);
       if (result.data === undefined) {
         fetchData();
         return;
       }
+=======
+      if (result.data.data === undefined) {
+        fetchData();
+        return;
+      }
+>>>>>>> 9c8516b74fe322e34d9f727bd5902342f99e40d4
       setrows(result.data.data);
     };
 
@@ -99,7 +106,16 @@ export default function StickyHeadTable() {
                       fsnOwn: row.fsnOwn,
                     };
                     return (
+<<<<<<< HEAD
                       <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+=======
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.id}
+                      >
+>>>>>>> 9c8516b74fe322e34d9f727bd5902342f99e40d4
                         {columns.map((column) => {
                           const value = row[column.id];
                           return (
