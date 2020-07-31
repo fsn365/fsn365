@@ -55,10 +55,10 @@ export default function StickyHeadTable() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await addressList();
-      if (result.data.data === undefined) {
-        fetchData();
-        return;
-      }
+      if (result.data.data === undefined) {
+        fetchData();
+        return;
+      }
       setrows(result.data.data);
     };
 
@@ -102,7 +102,7 @@ export default function StickyHeadTable() {
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={row.id}
+                        key={row.code}
                       >
                         {columns.map((column) => {
                           const value = row[column.id];
