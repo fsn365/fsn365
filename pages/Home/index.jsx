@@ -22,6 +22,7 @@ const home = ()=>{
     },[])
     return(
        <div className="homebox">
+           {/* search */}
                 <div className="searchbox">
                     <h6 className="MuiTypography-root">Fusion Blockchain Explorer</h6>
                     <div className="MuiOutlinedInput-root">
