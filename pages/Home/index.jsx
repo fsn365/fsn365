@@ -1,21 +1,27 @@
 import React, { useEffect,useState } from 'react';
 import './home.less'
+import Latest from './latest'
 
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import {getStats} from '../api'
 const home = ()=>{
     const [rows,getrows] = useState([])
     useEffect(()=>{
         const homestats = async ()=>{
             const state = await getStats()
+            if (state.data === undefined) {
+                homestats();
+                return;
+              }
             getrows(state.data)
         }
         homestats()
     },[])
-    console.log(rows)
     return(
-       <div>
+       <div className="homebox">
                 <div className="searchbox">
                     <h6 className="MuiTypography-root">Fusion Blockchain Explorer</h6>
                     <div className="MuiOutlinedInput-root">
@@ -31,7 +37,7 @@ const home = ()=>{
                     </div>
                 </div>
                 {
-                    rows.length===0?<div className="pricebox"></div>: <div className="pricebox">
+                    rows.length===0?<div className="pricebox"><CircularProgress /></div>: <div className="pricebox">
                         <div>
                             <h4>Price($)</h4>
                             <p>$ {rows.priceData.price}</p>
@@ -66,6 +72,7 @@ const home = ()=>{
                         </div>
                   </div>
                 }
+                <Latest/>
             </div>
     )
 }
