@@ -20,6 +20,7 @@ const latest = () =>{
     return(
         <div className="latestbox">
             <div className="boxlist1">
+                <div>
                 <p>Latest Txns <a href="/">View All</a></p>
                 {
                     txs.map((row)=>{
@@ -51,10 +52,12 @@ const latest = () =>{
                         )
                     })
                 }
+                </div>
             </div>
             
             <div className="boxlist2">
-            <p>Latest Blocks<a href="/">View All</a></p>
+                <div>
+                <p>Latest Blocks<a href="/">View All</a></p>
                 {
                     bks.map((row)=>{
                         return(
@@ -75,6 +78,7 @@ const latest = () =>{
                         )
                     })
                 }
+                </div>
             </div>
         </div>
     )
