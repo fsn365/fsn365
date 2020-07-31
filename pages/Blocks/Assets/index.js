@@ -1,10 +1,4 @@
-import React, { useState, useEffect } from "react";
-import "./blocks.less";
-// import axios from "axios";
-import { getBlocks } from "../api";
-import Head from "../Public/Head";
-import Footer from "../Public/Footer";
-
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -15,53 +9,42 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 
+import { assetsList } from "../api/assets";
+import Head from "../Public/Head";
+import Footer from "../Public/Footer";
+import "./index.less";
+
 const columns = [
-  { id: "height", label: "Block", minWidth: 170, align: "center" },
-  { id: "timestamp", label: "Age", minWidth: 80, align: "center" },
+  { id: "name", label: "Asset ", minWidth: 150 },
+  { id: "id", label: "Asset ID", minWidth: 70 },
   {
-    id: "miner",
-    label: "Miner",
-    minWidth: 170,
-    align: "center",
+    id: "quantity",
+    label: "Quantity",
+    minWidth: 70,
     format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "txns",
-    label: "Txn",
-    minWidth: 170,
-    align: "center",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "reward",
-    label: "Reward",
-    minWidth: 170,
-    align: "center",
-    format: (value) => value.toFixed(2),
   },
 ];
 
-const blockel = (v) => {
-  // console.log(v)
-};
+function createData(name, code, population, size) {
+  const density = population / size;
+  return { name, code, population, size, density };
+}
 
-export default function Blocks() {
-  const [arr, setArr] = useState([]);
+const rows = [];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getBlocks();
-      console.log(result);
-      if (result.data.data === undefined) {
-        fetchData();
-        return;
-      }
-      setArr(result.data.data);
-    };
-    fetchData();
-  }, []);
+const useStyles = makeStyles({
+  root: {
+    width: "100%",
+  },
+  container: {
+    maxHeight: 440,
+  },
+});
+
+export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rows, setrows] = useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -71,11 +54,25 @@ export default function Blocks() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await assetsList();
+      console.log(result.data.data);
+      if (result.data.data === undefined) {
+        fetchData();
+        return;
+      }
+      setrows(result.data.data);
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <div className="block">
+    <div className="main">
       <Head />
-      <div className="blocksdiv">
-        <h2>Blocks</h2>
+      <div className="txndiv">
+        <h3>Assets</h3>
         <Paper className="root">
           <TableContainer className="container">
             <Table stickyHeader aria-label="sticky table">
@@ -84,7 +81,7 @@ export default function Blocks() {
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
-                      align={column.align}
+                      align="center"
                       style={{ minWidth: column.minWidth }}
                     >
                       {column.label}
@@ -93,7 +90,7 @@ export default function Blocks() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {arr
+                {rows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
                     return (
@@ -101,17 +98,12 @@ export default function Blocks() {
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={row.reward}
+                        key={row.id}
                       >
                         {columns.map((column) => {
                           const value = row[column.id];
                           return (
-                            <TableCell
-                              onClick={blockel(value)}
-                              key={column.id}
-                              align={column.align}
-                            >
-                              {/* {console.log(column.format(value))} */}
+                            <TableCell key={column.id} align="center">
                               {column.format && typeof value === "number"
                                 ? column.format(value)
                                 : value}
@@ -125,9 +117,9 @@ export default function Blocks() {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25, 50, 100]}
+            rowsPerPageOptions={[5, 10, 15]}
             component="div"
-            count={arr.length}
+            count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}

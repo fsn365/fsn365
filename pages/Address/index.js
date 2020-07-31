@@ -30,13 +30,13 @@ const columns = [
     id: "fsnIn",
     label: "TL FSN",
     minWidth: 70,
-    format: (value) => value.toLocaleString("en-US"),
+    // format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "fsnOwn",
     label: "FSN Ownership",
     minWidth: 80,
-    format: (value) => value.toLocaleString("en-US"),
+    format: (obj) => `${obj.fsnOwn}M`,
   },
 ];
 export default function StickyHeadTable() {
@@ -55,7 +55,8 @@ export default function StickyHeadTable() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await addressList();
-      if (result.data.data === undefined) {
+      // console.log(result);
+      if (result.data === undefined) {
         fetchData();
         return;
       }
@@ -64,7 +65,6 @@ export default function StickyHeadTable() {
 
     fetchData();
   }, []);
-
   return (
     <div className="main">
       <Head />
@@ -96,21 +96,15 @@ export default function StickyHeadTable() {
                   .map((row, index) => {
                     var obj = {
                       id: row.id,
+                      fsnOwn: row.fsnOwn,
                     };
                     return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.code}
-                      >
+                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                         {columns.map((column) => {
                           const value = row[column.id];
                           return (
                             <TableCell key={column.id} align="center">
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
+                              {column.format ? column.format(obj) : value}
                             </TableCell>
                           );
                         })}
