@@ -28,8 +28,14 @@
       }
     }
     .nav-btn {
-        height: 35px;
-        width: 100px;
+      background-color: azure;
+      height: 35px;
+      width: 100px;
+      border: rgb(179, 213, 214) solid 1px;
+      cursor: pointer;
+    }
+    .nav-btn:hover{
+      border: cadetblue solid 1px;
     }
     .nav-show {
       display: block;
@@ -50,12 +56,17 @@
       color: #a2a2a2;
     }
 
-    .nav-search {
+    .homebtna {
       width: 65px;
       height: 35px;
       border: 1px solid #3499db;
       background: #3499db;
       text-align: center;
       line-height: 35px;
+      border-radius: 0 !important;
+      box-shadow: none;
+      >.MuiButton-label{
+        margin-top: -3px;
+      }
     }
   }

@@ -1,6 +1,8 @@
 import React from 'react'
 import {useState} from 'react'
 import './search.less'
+import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
 
 export default function Search() {
     const [menuisShow, setmenuisShow] = useState(false);
@@ -45,13 +47,14 @@ export default function Search() {
                     value={`${search}`}
                     onChange={(e) => setSearchHandle(e)}
                 />
-                <button
-                    className="nav-search"
-                    type="button"
-                    onClick={() => onsubmitHandle()}
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    className="homebtna"
+                    startIcon={<SearchIcon />}
                 >
-                    🔍
-                </button>
+                </Button>
             </div>
         </div>
     )
