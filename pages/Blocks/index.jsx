@@ -72,10 +72,10 @@ export default function Blocks() {
     setPage(0);
   };
   return (
-    <div>
+    <div className="block">
       <Head />
       <div className="blocksdiv">
-        <div className="blockstext">Blocks</div>
+        <h2>Blocks</h2>
         <Paper className="root">
           <TableContainer className="container">
             <Table stickyHeader aria-label="sticky table">
