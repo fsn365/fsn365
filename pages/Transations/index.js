@@ -73,10 +73,10 @@ export default function Blocks() {
     const fetchData = async () => {
       const result = await TxnList();
       // console.log(result.data.data);
-      if (result.data.data === undefined) {
-        fetchData();
-        return;
-      }
+      if (result.data.data === undefined) {
+        fetchData();
+        return;
+      }
       setrows(result.data.data);
     };
 

@@ -1,5 +1,13 @@
+.homebox{
+    padding: 0 5%;
+}
+@media screen and (max-width:1000px){
+    .homebox{
+        width: 1000px;
+    }
+}
 .searchbox{
-    margin: 20px;
+    margin: 20px 0;
     padding: 15px;
     box-shadow: 0 5px 12px rgba(189,197,209,.2);
     border-radius: 4px;
@@ -31,12 +39,12 @@
     margin-left: 11px;
 }
 .pricebox{
-    margin: 20px;
-    padding: 10px 15px;
+    margin: 20px 0;
+    padding: 10px 0;
     height: 120px;
     box-shadow: 0 10px 12px rgba(189,197,209,.2);
     background: white;
-    border-radius: 3px;
+    border-radius: 5px;
     text-align: center;
     div{
         width: 23%;
@@ -52,4 +60,96 @@
         margin-top: 3px;
         color: darkslategrey;
     }
+}
+.latestbox{
+    height: 500px;
+    text-align: center;
+    margin: 0 auto;
+    clear:both;
+    >div{
+        width: 47%;
+        box-shadow: 0 10px 12px rgba(189,197,209,.2);
+        background: white;
+        border-radius: 5px;
+        padding: 10px;
+        overflow: hidden;
+        padding-bottom: 20px;
+        >p{
+            height: 40px;
+            font-weight: 600;
+            text-align: left;
+            border-bottom: rgb(180, 235, 236) 1px solid;
+
+            a{
+                float: right;
+                font-weight: 400;
+                font-size: 13px;
+            }
+        }
+    }
+    .boxlist1{
+        float: left;
+    }
+    .boxlist2{
+        float: right;
+    }
+}
+.txsro{
+    text-align: left;
+    border-bottom: rgb(180, 235, 236) 1px solid;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    >div{
+        display: inline-block;
+        overflow: hidden;
+        white-space: normal !important;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+
+    }
+}
+.lohead{
+    height: 30px;
+    padding-top: 10px;
+    width: 40px;
+    text-align: center;
+    background-color: #E7EAF3;
+    border-radius: 50%;
+}
+.loheads{
+    height: 30px;
+    padding-top: 10px;
+    width: 40px;
+    text-align: center;
+    border-radius: 5%;
+    background-color: #E7EAF3;
+}
+.rowhash{
+    font-size: 13px;
+    width:35%;
+    margin-left: 10px;
+}
+.fromto{
+    font-size: 13px;
+    font-weight: 600;
+    width: 30%;
+    p{
+        a{
+            margin-left: 10px;
+            font-weight: 400;
+        }
+    }
+    >span{
+        a{
+            font-weight: 400;
+        }
+    }
+}
+.type{
+    width: 80px;
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    text-align: right;
+    font-size: 13px;
 }
