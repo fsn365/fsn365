@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -10,35 +9,38 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 
-import { addressList } from "../api/address";
+import { assetsList } from "../api/assets";
 import Head from "../Public/Head";
 import Footer from "../Public/Footer";
 import "./index.less";
 
 const columns = [
+  { id: "name", label: "Asset ", minWidth: 150 },
+  { id: "id", label: "Asset ID", minWidth: 70 },
   {
-    id: "id",
-    label: "Address ",
-    format: (obj) => (
-      <Link href={`/Address/${obj.id}`}>
-        <a>{obj.id}</a>
-      </Link>
-    ),
-  },
-  { id: "fsn", label: "FSN Balance", minWidth: 70 },
-  {
-    id: "fsnIn",
-    label: "TL FSN",
+    id: "quantity",
+    label: "Quantity",
     minWidth: 70,
-    // format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "fsnOwn",
-    label: "FSN Ownership",
-    minWidth: 80,
-    format: (obj) => `${obj.fsnOwn}M`,
+    format: (value) => value.toLocaleString("en-US"),
   },
 ];
+
+function createData(name, code, population, size) {
+  const density = population / size;
+  return { name, code, population, size, density };
+}
+
+const rows = [];
+
+const useStyles = makeStyles({
+  root: {
+    width: "100%",
+  },
+  container: {
+    maxHeight: 440,
+  },
+});
+
 export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -54,9 +56,9 @@ export default function StickyHeadTable() {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const result = await addressList();
-      // console.log(result);
-      if (result.data === undefined) {
+      const result = await assetsList();
+      console.log(result.data.data);
+      if (result.data.data === undefined) {
         fetchData();
         return;
       }
@@ -65,16 +67,13 @@ export default function StickyHeadTable() {
 
     fetchData();
   }, []);
+
   return (
     <div className="main">
       <Head />
       <div className="txndiv">
-        <h3>Fusion Address</h3>
+        <h3>Assets</h3>
         <Paper className="root">
-          <p>
-            <strong>Notice:</strong>We only list addresses that hold one or more
-            <strong className=" jss359"> FSN ownership </strong>at this page.
-          </p>
           <TableContainer className="container">
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
@@ -93,18 +92,21 @@ export default function StickyHeadTable() {
               <TableBody>
                 {rows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    var obj = {
-                      id: row.id,
-                      fsnOwn: row.fsnOwn,
-                    };
+                  .map((row) => {
                     return (
-                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.id}
+                      >
                         {columns.map((column) => {
                           const value = row[column.id];
                           return (
                             <TableCell key={column.id} align="center">
-                              {column.format ? column.format(obj) : value}
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
                             </TableCell>
                           );
                         })}
