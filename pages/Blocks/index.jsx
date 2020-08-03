@@ -4,6 +4,7 @@ import "./blocks.less";
 import { getBlocks } from "../api";
 import Head from "../Public/Head";
 import Footer from "../Public/Footer";
+import '../Home/home.less'
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
