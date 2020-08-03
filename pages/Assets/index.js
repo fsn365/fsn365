@@ -69,12 +69,12 @@ export default function StickyHeadTable() {
   }, []);
 
   return (
-    <div className="main">
+    <div className="assset">
       <Head />
-      <div className="txndiv">
+      <div className="a-div">
         <h3>Assets</h3>
-        <Paper className="root">
-          <TableContainer className="container">
+        <Paper className="a-root">
+          <TableContainer className="a-container">
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>

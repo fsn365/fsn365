@@ -21,7 +21,7 @@ const columns = [
     label: "Address ",
     format: (obj) => (
       <Link href={`/Address/${obj.id}`}>
-        <a>{obj.id}</a>
+        <a style={{ color: "#3A98DB" }}>{obj.id}</a>
       </Link>
     ),
   },
@@ -56,7 +56,7 @@ export default function StickyHeadTable() {
     const fetchData = async () => {
       const result = await addressList();
       // console.log(result);
-      if (result.data === undefined) {
+      if (result.data.data === undefined) {
         fetchData();
         return;
       }
@@ -66,19 +66,19 @@ export default function StickyHeadTable() {
     fetchData();
   }, []);
   return (
-    <div className="main">
+    <div className="address">
       <Head />
-      <div className="txndiv">
+      <div className="add-div">
         <h3>Fusion Address</h3>
-        <Paper className="root">
+        <Paper className="add-root">
           <p>
             <strong>Notice:</strong>We only list addresses that hold one or more
             <strong className=" jss359"> FSN ownership </strong>at this page.
           </p>
-          <TableContainer className="container">
+          <TableContainer className="add-container">
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
-                <TableRow>
+                <TableRow className="add-th">
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}

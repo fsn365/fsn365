@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./blocks.less";
-// import axios from "axios";
+import "./index.less";
 import { getBlocks } from "../api";
 import Head from "../Public/Head";
 import Footer from "../Public/Footer";
+import Link from "next/link";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -16,28 +16,41 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 
 const columns = [
-  { id: "height", label: "Block", minWidth: 170, align: "center" },
+  {
+    id: "height",
+    label: "Block",
+    minWidth: 170,
+    align: "center",
+    color: "#3498DB",
+    format: (obj) => (
+      <Link href={`/Blocks/${obj.height}`}>
+        <a style={{ color: "#3A98DB" }}>{obj.height}</a>
+      </Link>
+    ),
+  },
   { id: "timestamp", label: "Age", minWidth: 80, align: "center" },
   {
     id: "miner",
     label: "Miner",
     minWidth: 170,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
+    color: "#3498DB",
+    // format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "txns",
     label: "Txn",
     minWidth: 170,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
+    color: "#3498DB",
+    // format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "reward",
     label: "Reward",
     minWidth: 170,
     align: "center",
-    format: (value) => value.toFixed(2),
+    // format: (value) => value.toFixed(2),
   },
 ];
 
@@ -75,9 +88,9 @@ export default function Blocks() {
     <div className="block">
       <Head />
       <div className="blocksdiv">
-        <h2>Blocks</h2>
-        <Paper className="root">
-          <TableContainer className="container">
+        <h3>Blocks</h3>
+        <Paper className="b-root">
+          <TableContainer className="b-container">
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -85,6 +98,7 @@ export default function Blocks() {
                     <TableCell
                       key={column.id}
                       align={column.align}
+                      color={column.color}
                       style={{ minWidth: column.minWidth }}
                     >
                       {column.label}
@@ -95,14 +109,12 @@ export default function Blocks() {
               <TableBody>
                 {arr
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
+                  .map((row, index) => {
+                    var obj = {
+                      height: row.height,
+                    };
                     return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.reward}
-                      >
+                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                         {columns.map((column) => {
                           const value = row[column.id];
                           return (
@@ -111,10 +123,7 @@ export default function Blocks() {
                               key={column.id}
                               align={column.align}
                             >
-                              {/* {console.log(column.format(value))} */}
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
+                              {column.format ? column.format(obj) : value}
                             </TableCell>
                           );
                         })}

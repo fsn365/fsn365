@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/Link";
 
 import Head from "../Public/Head";
 import Footer from "../Public/Footer";
@@ -16,9 +17,9 @@ export default function Index() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    const query = window.location.pathname.substring(9);
+    const query = window.location.pathname.substring(8);
     const fetch = async () => {
-      const res = await axios.get(`https://api.fsn365.com/address/${query}`);
+      const res = await axios.get(`https://api.fsn365.com/stats/${query}`);
       setData(res.data.data);
       //   console.log(res.data);
     };

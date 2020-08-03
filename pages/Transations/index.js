@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import "./index.less";
+import Link from "next/link";
 
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -15,43 +16,39 @@ import Head from "../Public/Head";
 import Footer from "../Public/Footer";
 
 const columns = [
-  { id: "hash", label: "Tx Hash ", minWidth: 150 },
-  { id: "timestamp", label: "Time", minWidth: 70 },
+  {
+    id: "hash",
+    label: "Tx Hash ",
+    format: (obj) => (
+      <Link href={`/Transations/${obj.hash}`}>
+        <a style={{ color: "#3A98DB" }}>{obj.hash.slice(0, 14)}...</a>
+      </Link>
+    ),
+  },
+  { id: "timestamp", label: "Time" },
   {
     id: "bk",
     label: "Block",
-    minWidth: 70,
-    format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "from",
     label: "From",
-    minWidth: 80,
-    format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "Direction",
     label: "Direction",
-    minWidth: 50,
-    format: (value) => value.toFixed(2),
   },
   {
     id: "to",
     label: "To",
-    minWidth: 80,
-    format: (value) => value.toFixed(2),
   },
   {
     id: "type",
     label: "Tx Type",
-    minWidth: 120,
-    format: (value) => value.toFixed(2),
   },
   {
     id: "info",
     label: "Info",
-    minWidth: 90,
-    format: (value) => value.toFixed(2),
   },
 ];
 
@@ -73,10 +70,10 @@ export default function Blocks() {
     const fetchData = async () => {
       const result = await TxnList();
       // console.log(result.data.data);
-      if (result.data.data === undefined) {
-        fetchData();
-        return;
-      }
+      if (result.data.data === undefined) {
+        fetchData();
+        return;
+      }
       setrows(result.data.data);
     };
 
@@ -85,12 +82,12 @@ export default function Blocks() {
   // console.log(rows)
 
   return (
-    <div className="main">
+    <div className="txn">
       <Head />
       <div className="txndiv">
         <h3>Transations</h3>
-        <Paper className="root">
-          <TableContainer className="container">
+        <Paper className="t-root">
+          <TableContainer className="t-container">
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -108,14 +105,12 @@ export default function Blocks() {
               <TableBody>
                 {rows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
+                  .map((row, index) => {
+                    var obj = {
+                      hash: row.hash,
+                    };
                     return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.hash}
-                      >
+                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                         {columns.map((column) => {
                           let value;
                           if (column.id == "info") {
@@ -126,8 +121,8 @@ export default function Blocks() {
                           }
                           return (
                             <TableCell key={column.id} align={column.align}>
-                                                            {value}
-                                                          
+                                           
+                              {column.format ? column.format(obj) : value}
                             </TableCell>
                           );
                         })}
